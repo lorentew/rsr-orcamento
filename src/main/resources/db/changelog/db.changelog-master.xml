@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd
+http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd">
+    <changeSet id="202010211812" author="Willians Lorente">
+        <createTable tableName="empresa">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="empresa_id_pk" />
+            </column>
+            <column name="razao_social" type="varchar(250)"></column>
+            <column name="cpf_cnpj" type="varchar(18)">
+                <constraints unique="true" uniqueConstraintName="documento_owner_unq" />
+            </column>
+            <column name="logradouro" type="varchar(100)"></column>
+            <column name="log_numero" type="varchar(6)"></column>
+            <column name="log_bairro" type="varchar(50)"></column>
+            <column name="log_cidade" type="varchar(50)"></column>
+            <column name="log_uf" type="varchar(2)"></column>
+            <column name="log_cep" type="varchar(9)"></column>
+            <column name="ind_ativo" type="boolean" defaultValueBoolean="false"></column>
+        </createTable>
+        <createTable tableName="cliente">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" primaryKeyName="cliente_id_pk" />
+            </column>
+            <column name="empresa_id" type="bigint">
+                <constraints nullable="false" notNullConstraintName="cliente_empresa_id_nn" />
+            </column>
+            <column name="nome" type="varchar(250)"></column>
+            <column name="cpf_cnpj" type="varchar(18)">
+                <constraints unique="true" uniqueConstraintName="documentoCliente_owner_unq" />
+            </column>
+            <column name="ddd_telefone" type="varchar(20)"></column>
+            <column name="email" type="varchar(90)"></column>
+            <column name="contato" type="varchar(100)"></column>
+            <column name="observacao" type="varchar(500)"></column>
+
+        </createTable>
+        <addAutoIncrement tableName="empresa" columnName="id" columnDataType="bigint" startWith="1" incrementBy="1" />
+        <addAutoIncrement tableName="cliente" columnName="id" columnDataType="bigint" startWith="1000" incrementBy="1" />
+        <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="cliente" baseColumnNames="empresa_id" constraintName="cliente_empresa_id_fk" referencedTableName="empresa" referencedColumnNames="id" />
+
+    </changeSet>
+
+    <changeSet id="202010211814" author="Willians Lorente">
+        <preConditions  onFail="WARN">
+            <sqlCheck  expectedResult="0">SELECT COUNT(*) FROM empresa WHERE cpf_cnpj='999.999.999-99'</sqlCheck>
+        </preConditions>
+        <insert tableName="empresa">
+            <column name="razao_social" value="RSR Eletrika"/>
+            <column name="cpf_cnpj" value="999.999.999-99"/>
+            <column name="logradouro" value="UMA RUA QUALQUER"/>
+            <column name="log_numero" value="200"/>
+            <column name="log_bairro" value="CESAR DE SOUZA"/>
+            <column name="log_cidade" value="MOGI DAS CRUZES"/>
+            <column name="log_uf" value="SP"/>
+            <column name="log_cep" value="99999-999"/>
+            <column name="ind_ativo" valueBoolean="TRUE"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
