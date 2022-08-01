@@ -1,4 +1,4 @@
-package br.com.wlorente.rsrorcamento.service.facade;
+package br.com.wlorente.rsrorcamento.repository.facade;
 
 import br.com.wlorente.rsrorcamento.dto.ClienteDTO;
 import br.com.wlorente.rsrorcamento.model.Cliente;
@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface ClienteRepositoryFacade {
     Optional<Cliente> findById(Integer id);
     Cliente save(Cliente cliente);
-    List<ClienteDTO> findAll();
+    List<Cliente> findAll();
 }
