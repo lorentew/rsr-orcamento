@@ -2,7 +2,7 @@ package br.com.wlorente.rsrorcamento.repository.pg;
 
 import br.com.wlorente.rsrorcamento.model.Cliente;
 import br.com.wlorente.rsrorcamento.repository.pg.jpa.ClienteRepository;
-import br.com.wlorente.rsrorcamento.service.facade.ClienteRepositoryFacade;
+import br.com.wlorente.rsrorcamento.repository.facade.ClienteRepositoryFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;

@@ -21,6 +21,7 @@ public class ClienteResource {
 
     private final GravarCliente gravarCliente;
     private final CarregaClientePorId carregaClientePorId;
+    private CarregarTodos carregarTodos;
 
 
     @PostMapping
@@ -38,7 +39,7 @@ public class ClienteResource {
 
     @GetMapping("/list")
     public ResponseEntity findAll(){
-        return ResponseEntity.ok(CarregarTodos.executar());
+        return ResponseEntity.ok(carregarTodos.executar());
     }
 
 }

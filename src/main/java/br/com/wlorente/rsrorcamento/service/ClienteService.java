@@ -3,13 +3,14 @@ package br.com.wlorente.rsrorcamento.service;
 import br.com.wlorente.rsrorcamento.dto.ClienteDTO;
 import br.com.wlorente.rsrorcamento.dto.mapper.ClienteMapper;
 import br.com.wlorente.rsrorcamento.model.Cliente;
-import br.com.wlorente.rsrorcamento.service.facade.ClienteRepositoryFacade;
+import br.com.wlorente.rsrorcamento.repository.facade.ClienteRepositoryFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +30,19 @@ public class ClienteService {
 
     public List<ClienteDTO> findAll(){
 
-        return ClienteMapper.convert(repository.findAll().stream().map().);
+        List<ClienteDTO> result = repository.findAll().stream().map(temp -> {
+            ClienteDTO obj = new ClienteDTO();
+            obj.setId(temp.getId());
+            obj.setNome(temp.getNome());
+            obj.setDocumento(temp.getDocumento());
+            obj.setEmpresaId(temp.getEmpresa());
+            obj.setContato(temp.getContato());
+            obj.setEmail(temp.getEmail());
+            obj.setObservacao(temp.getObservacao());
+            obj.setTelefone(temp.getTelefone());
+            return obj;
+        }).collect(Collectors.toList());
+        return result;
     }
 
 }
